@@ -126,10 +126,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+
 
 # Мои настройки.
-LOGIN_URL = '/users/login/'
+LOGIN_URL = '\\users\\login\\'
 
 # Настройки django-bootstrap4
 BOOTSTRAP4 = {
@@ -139,23 +139,22 @@ BOOTSTRAP4 = {
 # Настройки Heroku.
 cwd = os.getcwd()
 
-if cwd == '/app' or cwd[:4] == '/tmp':
-    import dj_database_url
+#if cwd == '/app' or cwd[:4] == '/tmp':
+import dj_database_url
 
-    DATABASES = {
-        'default': dj_database_url.config(default='postgres://localhost')
-    }
+DATABASES = {
+    'default': dj_database_url.config(default='postgres://localhost')
+}
 
-    # Поддержка заголовка 'X-Forwarded-Proto' для request.is_secure()
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# Поддержка заголовка 'X-Forwarded-Proto' для request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-    # Разрешены все заголовки хостов.
-    ALLOWED_HOSTS = ['*']
-    
-    # Конфигурация статических ресурсов.
-    BASE_DIR    = os.path.dirname(os.path.abspath(__file__))
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# Разрешены все заголовки хостов.
+ALLOWED_HOSTS = ['*']
 
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static', '/'),
-    )
+# Конфигурация статических ресурсов.
+BASE_DIR    = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '\\static\\'
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'))
