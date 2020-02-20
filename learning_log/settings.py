@@ -15,22 +15,10 @@ import django_heroku
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
+BASE_DIR   = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'qe!i*b*o672px-#ylk7@+o^+%ent=idjo#^fes*3b1w7x^2bl8'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+DEBUG      = True
 ALLOWED_HOSTS = []
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -76,7 +64,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'learning_log.wsgi.application'
+WSGI_APPLICATION = 'learning_log.wsgi'
 
 
 # Database
