@@ -1,6 +1,0 @@
-'''
-    author: Kristina Zheleznyakove
-    description:
-
-        
-'''

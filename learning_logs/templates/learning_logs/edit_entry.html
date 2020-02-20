@@ -1,0 +1,22 @@
+{% extends 'learning_logs/base.html' %}
+{% load bootstrap4 %}
+
+{% block header %}
+  <h3>Edit entry:</h3>
+{% endblock header %}
+
+{% block content %}
+
+  <h5><a href='{% url "learning_logs:topic" topic.id %}'>{{ topic }}</a></h5>
+  
+  <form action="{% url 'learning_logs:edit_entry' entry.id %}" method="post" 
+    class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+
+    {% buttons %}
+    <button class="btn btn-primary btn-lg" type="submit">Save changes</button>
+    {% endbuttons %} 
+  </form>
+  
+{% endblock content %}
