@@ -9,6 +9,9 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
+import os
+import django_heroku
+
 
 MIDDLEWARE   = [
     'ware.security.SecurityMiddleware',
