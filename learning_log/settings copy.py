@@ -11,25 +11,14 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import django_heroku
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'qe!i*b*o672px-#ylk7@+o^+%ent=idjo#^fes*3b1w7x^2bl8'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
-# Application definition
-
+BASE_DIR       = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SECRET_KEY     = 'qe!i*b*o672px-#ylk7@+o^+%ent=idjo#^fes*3b1w7x^2bl8'
+DEBUG          = True
+ALLOWED_HOSTS  = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,7 +35,7 @@ INSTALLED_APPS = [
     'users',
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE   = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -55,10 +44,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 ROOT_URLCONF = 'learning_log.urls'
-
-TEMPLATES = [
+TEMPLATES    = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
@@ -74,23 +61,16 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'learning_log.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASES = {
+WSGI_APPLICATION = 'learning_log.wsgi'
+DATABASES        = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -106,55 +86,22 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/3.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
+TIME_ZONE     = 'UTC'
+USE_I18N      = True
+USE_L10N      = True
+USE_TZ        = True
+LOGIN_URL     = '/users/login/'
+BOOTSTRAP4    = {'include_jquery': True}
+cwd           = os.getcwd()
 
-TIME_ZONE = 'UTC'
+#if cwd == '/app' or cwd[:4] == '/tmp':
+import dj_database_url
 
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
-
-STATIC_URL = '/staticfiles/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static') + '\\'
-
-# Мои настройки.
-LOGIN_URL = '/users/login/'
-
-# Настройки django-bootstrap4
-BOOTSTRAP4 = {
-    'include_jquery': True,
-}
-
-# Настройки Heroku.
-cwd = os.getcwd()
-
-if cwd == '/app' or cwd[:4] == '/tmp':
-    import dj_database_url
-
-    DATABASES = {
-        'default': dj_database_url.config(default='postgres://localhost')
-    }
-
-    # Поддержка заголовка 'X-Forwarded-Proto' для request.is_secure()
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-    # Разрешены все заголовки хостов.
-    ALLOWED_HOSTS = ['*']
-    
-    # Конфигурация статических ресурсов.
-    BASE_DIR    = os.path.dirname(os.path.abspath(__file__))
-    STATIC_URL  = 'staticfiles'
-
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static'),
-    )
+# Поддержка заголовка 'X-Forwarded-Proto' для request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# Разрешены все заголовки хостов.
+ALLOWED_HOSTS           = ['*']
+STATIC_ROOT             = 'staticfiles'
+STATIC_URL              = os.path.join(BASE_DIR, 'learning_log', 'static') + '/'
+STATICFILES_DIRS        = [os.path.join(BASE_DIR, 'learning_log', 'static')]
