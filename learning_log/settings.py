@@ -101,8 +101,7 @@ import dj_database_url
 # Поддержка заголовка 'X-Forwarded-Proto' для request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Разрешены все заголовки хостов.
-ALLOWED_HOSTS = ['*']
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/staticfiles/'
-
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+ALLOWED_HOSTS           = ['*']
+STATIC_ROOT             = 'staticfiles'
+STATIC_URL              = os.path.join(BASE_DIR, 'learning_log', 'static') + '/'
+STATICFILES_DIRS        = [os.path.join(BASE_DIR, 'learning_log', 'static')]
