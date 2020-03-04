@@ -27,6 +27,9 @@ urlpatterns = [
 
     # Страница для редактирования записи.
     re_path(r'^edit_entry/(?P<entry_id>\d+)/$', views.edit_entry, name='edit_entry'),
+
+    # Страница для удаления записи.
+    re_path(r'^delete_entry/(?P<entry_id>\d+)/$', views.delete_entry, name='delete_entry'),
 ]
 
 app_name ='nameapp'

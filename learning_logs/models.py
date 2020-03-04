@@ -28,13 +28,27 @@ class Entry(models.Model):
 
     '''
 
-    topic      = models.ForeignKey(Topic, on_delete=models.PROTECT)
-    text       = models.TextField()
-    date_added = models.DateTimeField(auto_now_add=True)
+    STATUS_CHOICES = [
+            ('pr', 'Private'),
+            ('pb', 'Published'),
+    ]
+
+    VERIF_STATUS = [
+        ('ok', 'Verified'),
+        ('no', 'Reject'),
+    ]
+
+    topic        = models.ForeignKey(Topic, on_delete=models.PROTECT)
+    text         = models.TextField()
+    date_added   = models.DateTimeField(auto_now_add=True)    
+    entry_status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='')
+    verified_adm = models.CharField(max_length=2, choices=VERIF_STATUS, default='')
+    tag          = models.CharField(max_length=100, default='')
 
 
     class Meta:
         verbose_name_plural = 'entries'
+
 
     def __str__(self):
         '''
@@ -47,3 +61,13 @@ class Entry(models.Model):
 
         else:
             return self.text[:50]
+
+
+'''class ForVerification(Entry):
+    
+    #Модель, наследуемая от Entry, чтобы отобразить 
+     #записи на сайте администратора в отдельной графе.
+
+    
+
+    status       = Entry.objects.filter(entry_status='pb')'''

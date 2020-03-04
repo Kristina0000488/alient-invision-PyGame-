@@ -1,7 +1,10 @@
-from django.shortcuts               import render
-from django.urls                    import reverse
+from django.shortcuts               import render, get_object_or_404
+from django.urls                    import reverse, reverse_lazy
 from django.http                    import HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators        import method_decorator
+from django.db.models               import ProtectedError
+from django.views.generic.edit      import DeleteView
 
 from .models                        import Topic, Entry
 from .forms                         import TopicForm, EntryForm
@@ -9,11 +12,14 @@ from .forms                         import TopicForm, EntryForm
 
 def index(request):
     '''
-    Домашняя страница приложения Learning Log
+    Домашняя страница приложения Learning Log.
     
     '''
 
-    return render(request, 'learning_logs/index.html')
+    entries = Entry.objects.filter(entry_status='pb', verified_adm='ok').order_by('-date_added')
+    context = {'entries': entries}
+
+    return render(request, 'learning_logs/index.html', context)
 
 @login_required
 def topics(request):
@@ -93,6 +99,7 @@ def new_entry(request, topic_id):
         if form.is_valid():
             new_entry       = form.save(commit=False) 
             new_entry.topic = topic
+            entry_status    = form.cleaned_data.get("entry_status")
 
             new_entry.save()
 
@@ -133,12 +140,32 @@ def edit_entry(request, entry_id):
 
     return render(request, 'learning_logs/edit_entry.html', context)
 
-def check_topic_owner(r, t):
+@login_required
+def delete_entry(request, entry_id):
+    '''
+    Удаляет существующую запись.
+
+    '''
+
+    
+    obj   = Entry.objects.get(id=entry_id)
+    topic = obj.topic
+
+    check_topic_owner(request, topic)
+
+    if request.method == "POST":
+        obj.delete()
+
+        return HttpResponseRedirect(reverse('learning_logs:topics'))
+
+    return render(request, 'learning_logs/delete_entry.html')
+
+def check_topic_owner(request, topic):
     '''
     Проверяет, что пользователь, связанный с темой, 
      является текущим пользователем.
 
     '''
 
-    if t.owner != r.user:
+    if topic.owner != request.user:
         raise Http404

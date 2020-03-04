@@ -143,6 +143,7 @@ if cwd == '/app' or cwd[:4] == '/tmp':
 
     DATABASES = {
         'default': dj_database_url.config(default='postgres://localhost')
+        
     }
 
     # Поддержка заголовка 'X-Forwarded-Proto' для request.is_secure()
@@ -155,6 +156,7 @@ if cwd == '/app' or cwd[:4] == '/tmp':
     BASE_DIR    = os.path.dirname(os.path.abspath(__file__))
     STATIC_URL  = '/staticfiles/'
     STATIC_ROOT = '/static/'
+    
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, 'static'),
     )

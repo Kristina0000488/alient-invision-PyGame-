@@ -1,0 +1,12 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block content %}
+    <div class="main">
+        <form method="POST">{% csrf_token %}
+            <h5><p class="pt-5">Are you sure you want to delete {{ obj }}?</p></h5>
+            <input type="submit" value="Yes" class="btn btn-success">
+            <a href="{% url 'learning_logs:topics' %}" class="btn btn-secondary" 
+                role="button">No</a>
+        </form>
+    </div>
+{% endblock content %}

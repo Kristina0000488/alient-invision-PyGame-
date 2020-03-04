@@ -1,8 +1,9 @@
-from django.urls               import reverse
-from django.http               import HttpResponseRedirect
-from django.contrib.auth       import logout, login, authenticate
-from django.shortcuts          import render
-from django.contrib.auth.forms import UserCreationForm
+from django.urls                 import reverse
+from django.http                 import HttpResponseRedirect
+from django.contrib.auth         import logout, login, authenticate
+from django.contrib.auth.hashers import make_password
+from django.shortcuts            import render
+from django.contrib.auth.forms   import UserCreationForm
 
 
 def logout_view(request):
@@ -30,7 +31,10 @@ def register(request):
         form = UserCreationForm(data=request.POST)
 
         if form.is_valid():
-            new_user           = form.save()
+            new_user          = form.save(commit=False)
+            new_user.password = make_password(form.cleaned_data['password1'])
+
+            new_user.save()
             # Выполнение входа и перенаправление на домашнюю страницу.
             authenticated_user = authenticate(username=new_user.username, 
                                     password=request.POST['password1']) 

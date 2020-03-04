@@ -1,16 +1,46 @@
 {% extends 'learning_logs/base.html' %}
+{% load bootstrap4 %}
 
 {% block header %}
-  <div class="jumbotron">
+  <div class="jumbotron bg-secondary text-white">
     <h1 class="display-4 pt-4">Track your learning.</h1> 
   </div>
 {% endblock header %}
 
 {% block content %}
-  <div class="my-4">
-    <h5><p><a href="{% url 'users:register' %}">Register in account</a> to make
-    your own Learning Log, and list the topics you're learning about.</p></h5>
-    <h5><p class="font-weight-light">Whenever you learn something new about a topic, make an entry
-      summarizing what you've learned.</p></h5> 
-  </div>
+
+  {% if user.is_authenticated %}
+  <div class="font-weight-light">
+    <h5><p class="font-weight-light">Hello, {{ user.username }}!</p></h5>
+  
+  {% else %}
+    <div class="my-4">
+      <h5><p><a href="{% url 'users:register' %}">Register in account</a> to make
+      your own Learning Log, and list the topics you're learning about.</p></h5>
+      <h5><p>You can also leave a public record for all users.</p></h5>
+      <h5><p>Whenever you learn something new about a topic, make an entry
+        summarizing what you've learned.</p></h5> 
+    </div>
+
+  {% endif %}
+
+  {% for entry in entries %}
+    <div class="card">
+      <div class="card-header">
+        <h5>
+          {{ entry.date_added|date:"Y-m-d, H:i"}}
+        </h5>
+        {% if user.is_authenticated %}
+          <h5><p class="font-weight-light">Post author: {{ user.username }}</p></h5>
+
+        {% endif %}
+      </div>
+      <div class="card-body">
+        <h6><p class="card-text">{{ entry.text|linebreaks }}</p></h6>
+      </div>
+    </div>
+    <p></p>
+
+  {% endfor %}
+  
 {% endblock content %}
